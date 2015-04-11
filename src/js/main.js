@@ -49,8 +49,6 @@ $(document).ready(function () {
 		$('.row1').slideUp(500);
 		$('.row2').show();
 
-		alert(peopleCount);
-
 		// get the message
 		message = $('#startmessage').val();
 
