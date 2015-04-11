@@ -1,0 +1,25 @@
+body {
+    margin: 0;
+    padding: 1em;
+    overflow: hidden;
+    height: 100vh;
+}
+
+ol {
+    list-style-position: outside;
+}
+
+.row2 {
+    height: calc(100vh - 2em);
+    margin: 0;
+    padding: 0;
+}
+
+.row2 .col-md-12 {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #e6f0f0;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
