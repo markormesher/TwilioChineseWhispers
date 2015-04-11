@@ -51,18 +51,10 @@ fclose($fh);
 			</div>
 			<div class="row" style="margin-top: 1em;">
 				<div class="col-sm-6">
-					<input type="text" class="form-control" id="name2" placeholder="Name #2" value="Ana"/>
+					<input type="text" class="form-control" id="name2" placeholder="Name #2" value="Josh"/>
 				</div>
 				<div class="col-sm-6">
-					<input type="text" class="form-control" id="phone2" placeholder="Phone #2" value="07438772193"/>
-				</div>
-			</div>
-			<div class="row" style="margin-top: 1em;">
-				<div class="col-sm-6">
-					<input type="text" class="form-control" id="name3" placeholder="Name #3" value="Josh"/>
-				</div>
-				<div class="col-sm-6">
-					<input type="text" class="form-control" id="phone3" placeholder="Phone #3" value="07905284322"/>
+					<input type="text" class="form-control" id="phone2" placeholder="Phone #2" value="07905284322"/>
 				</div>
 			</div>
 		</div>

@@ -1,11 +1,12 @@
-var peopleCount = 3;
-var laps = 2;
+var peopleCount = 2;
+var laps = 3;
 var loopCounter = 0;
 var latestResponseTimer = 1;
 var people = [];
+var originalMessage = '';
 var message = '';
 
-var TEXTS = false;
+var TEXTS = true;
 
 $(document).ready(function () {
 
@@ -54,6 +55,7 @@ $(document).ready(function () {
 
 		// get the message
 		message = $('#startmessage').val();
+		originalMessage = message;
 
 		// go!
 		cycleAutopilot();
@@ -68,6 +70,7 @@ $(document).ready(function () {
 
 		// get the message
 		message = $('#startmessage').val();
+		originalMessage = message;
 
 		// go!
 		cycleInteractive();
@@ -107,7 +110,7 @@ function cycleAutopilot() {
 
 			// done?
 			if (loopCounter >= (laps * peopleCount)) {
-				displayNextMessage('Done!', '<em>You ended up with:</em><br/>' + message);
+				displayNextMessage('Done!', '<em>You started with:</em><br/>' + originalMessage + '<br/><br/><em>You ended up with:</em><br/>' + message);
 			} else {
 				// recurse
 				setTimeout(function () {
@@ -128,12 +131,12 @@ function cycleInteractive() {
 		},
 		function (data) {
 			// send SMS
+			message = data;
 			if (TEXTS) $.post(
 				'twilio.php',
 				{
-					name: people[loopCounter][0],
-					number: people[loopCounter][1],
-					message: message + '(' + loopCounter + ')'
+					number: people[loopCounter % peopleCount][1],
+					message: message + ' (' + loopCounter + ')'
 				}
 			);
 
@@ -154,7 +157,7 @@ function waitForInteractiveResponse() {
 				latestResponseTimer = parseInt(chunks[0]);
 
 				// update
-				message = chunks[1];
+				message = message.replace(/___/, chunks[1].toLowerCase());
 
 				// print to the browser
 				displayNextMessage(people[loopCounter % peopleCount][0], message);
@@ -164,7 +167,7 @@ function waitForInteractiveResponse() {
 
 				// done?
 				if (loopCounter >= (laps * peopleCount)) {
-					displayNextMessage('Done!', '<em>You ended up with:</em><br/>' + message);
+					displayNextMessage('Done!', '<em>You started with:</em><br/>' + originalMessage + '<br/><br/><em>You ended up with:</em><br/>' + message);
 				} else {
 					// recurse
 					cycleInteractive()
