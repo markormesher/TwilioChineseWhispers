@@ -181,10 +181,8 @@ function waitForInteractiveResponse() {
 					cycleInteractive()
 				}
 			} else {
-				// wait a moment, then check again
-				setTimeout(function () {
-					waitForInteractiveResponse();
-				}, 1000);
+				//  check again
+				waitForInteractiveResponse();
 			}
 		}
 	);
