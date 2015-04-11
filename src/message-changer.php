@@ -9,9 +9,9 @@ function changeMessage($message, $source){
 
 function getNewWord($oldWord, $source){
     switch($source){
-        case 'urbandictionary':
-            if(strlen($oldWord) >3){
-               $oldWord = findUrbanOf(substr($oldWord,0, 3));
+        case 'dictionary':
+            if(strlen($oldWord) >2){
+               $oldWord = findDictionaryOf(substr($oldWord,0, 2));
             }
             return $oldWord;
         default:
@@ -19,7 +19,7 @@ function getNewWord($oldWord, $source){
     }
 }
 
-function findUrbanOf($subWord){
+function findDictionaryOf($subWord){
     $contents = file('words.txt');
     $matches = [];
     foreach($contents as $line){
@@ -30,3 +30,5 @@ function findUrbanOf($subWord){
     $rand = rand(0, count($matches)-1);
     return trim($matches[$rand]);
 }
+
+echo(changeMessage($_GET['message'], $_GET['source']));
