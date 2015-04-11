@@ -6,7 +6,7 @@ var people = [];
 var originalMessage = '';
 var message = '';
 
-var TEXTS = true;
+var TEXTS = false;
 
 $(document).ready(function () {
 
@@ -132,16 +132,24 @@ function cycleInteractive() {
 		function (data) {
 			// send SMS
 			message = data;
-			if (TEXTS) $.post(
-				'twilio.php',
-				{
-					number: people[loopCounter % peopleCount][1],
-					message: message + ' (' + loopCounter + ')'
-				}
-			);
+			if (TEXTS) {
+				$.post(
+					'twilio.php',
+					{
+						number: people[loopCounter % peopleCount][1],
+						message: message + ' (' + loopCounter + ')'
+					}
+				);
 
-			// wait for them to respond
-			waitForInteractiveResponse();
+				// wait for them to respond
+				waitForInteractiveResponse();
+			} else {
+				++loopCounter;
+				displayNextMessage('Test Mode', 'Test message');
+				setTimeout(function () {
+					cycleInteractive();
+				}, 2000);
+			}
 		}
 	);
 }
@@ -185,7 +193,7 @@ function waitForInteractiveResponse() {
 function displayNextMessage(name, message) {
 	// build output
 	var output = '<div class="row" style="margin-top: 1em;">' +
-		'<div class="col-md-4 col-md-offset-4">' +
+		'<div class="col-md-4 col-md-offset-' + (loopCounter % 2 == 0 ? '3' : '5') + '">' +
 		'<div class="alert alert-info text-' + (loopCounter % 2 == 0 ? 'left' : 'right') + '">' +
 		'<h3>' + name.toUpperCase() + '</h3>' +
 		'<p>' + message + '</p>' +
