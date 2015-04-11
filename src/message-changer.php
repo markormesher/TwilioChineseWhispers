@@ -1,21 +1,23 @@
 <?php
 
-function changeMessage($message, $source){
+function changeMessage($message, $action){
     $words = explode(' ', $message);
     $rand = rand(0, count($words)-1);
-    $words[$rand] = getNewWord($words[$rand], $source);
+    $words[$rand] = getNewWord($words[$rand], $action);
     return implode(' ',$words);
 }
 
-function getNewWord($oldWord, $source){
-    switch($source){
-        case 'dictionary':
+function getNewWord($oldWord, $action){
+    switch($action){
+        case 'autopilot':
             if(strlen($oldWord) >2){
                $oldWord = findDictionaryOf(substr($oldWord,0, 2));
             }
             return $oldWord;
+        case 'interactive':
+            return '___';
         default:
-            return 'Y U Put the wrong source?!?!?!?';
+            return 'Y U Put the wrong action?!?!?!?';
     }
 }
 
@@ -31,4 +33,4 @@ function findDictionaryOf($subWord){
     return trim($matches[$rand]);
 }
 
-echo(changeMessage($_POST['message'], $_POST['source']));
+echo(changeMessage($_POST['message'], $_POST['action']));
