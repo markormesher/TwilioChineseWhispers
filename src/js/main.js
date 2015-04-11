@@ -192,14 +192,20 @@ function waitForInteractiveResponse() {
 
 function displayNextMessage(name, message) {
 	// build output
-	var output = '<div class="row" style="margin-top: 1em;">' +
-		'<div class="col-md-4 col-md-offset-' + (loopCounter % 2 == 0 ? '3' : '5') + '">' +
-		'<div class="alert alert-info text-' + (loopCounter % 2 == 0 ? 'left' : 'right') + '">' +
-		'<h3>' + name.toUpperCase() + '</h3>' +
-		'<p>' + message + '</p>' +
-		'</div>' +
-		'</div>' +
-		'</div>';
+	var output = '<div class="row" style="margin-top: 1em;">';
+	if(loopCounter %2 == 0){
+		output += '<div class="col-md-1 col-md-offset-2 text-right"><img src="/img/cristiano-left.png"/></div>';
+	}
+	output += '<div class="col-md-4' + (loopCounter % 2 == 0 ? '' : ' col-md-offset-5') + '">' +
+	'<div class="alert alert-info text-' + (loopCounter % 2 == 0 ? 'left' : 'right') + '">' +
+	'<h3>' + name.toUpperCase() + '</h3>' +
+	'<p>' + message + '</p>' +
+	'</div>' +
+	'</div>';
+	if(loopCounter %2 == 1){
+		output += '<div class="col-md-1"><img src="/img/cristiano-right.png"/></div>';
+	}
+	output += '</div>';
 
 	// append
 	var outputTarget = $('.message-output');
