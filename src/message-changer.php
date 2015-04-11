@@ -31,4 +31,4 @@ function findDictionaryOf($subWord){
     return trim($matches[$rand]);
 }
 
-echo(changeMessage($_GET['message'], $_GET['source']));
+echo(changeMessage($_POST['message'], $_POST['source']));
