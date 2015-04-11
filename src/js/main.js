@@ -42,7 +42,7 @@ $(document).ready(function () {
 		}
 	});
 
-	// lets go!
+	// start auto mode
 	$('button.stage2-go-auto').click(function (e) {
 		// change display
 		$('.row0').slideUp(300);
@@ -56,6 +56,19 @@ $(document).ready(function () {
 		cycleAuto();
 	});
 
+	// start interactive mode
+	$('button.stage2-go-interactive').click(function (e) {
+		// change display
+		$('.row0').slideUp(300);
+		$('.row1').slideUp(500);
+		$('.row2').show();
+
+		// get the message
+		message = $('#startmessage').val();
+
+		alert('TODO: interactive mode');
+	});
+
 });
 
 function cycleAuto() {
@@ -63,7 +76,7 @@ function cycleAuto() {
 	$.post(
 		'message-changer.php',
 		{
-			source: 'dictionary',
+			action: 'autopilot',
 			message: message
 		},
 		function (data) {
@@ -77,7 +90,7 @@ function cycleAuto() {
 					{
 						name: people[i][0],
 						number: people[i][1],
-						message: message
+						message: message + '(' + loopCounter + ')'
 					}
 				);
 			}
