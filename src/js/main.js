@@ -1,5 +1,5 @@
-var peopleCount = 2;
-var laps = 5;
+var peopleCount = 3;
+var laps = 2;
 var loopCounter = 0;
 var people = [];
 var message = '';
@@ -43,7 +43,7 @@ $(document).ready(function () {
 	});
 
 	// lets go!
-	$('button.stage2-go').click(function (e) {
+	$('button.stage2-go-auto').click(function (e) {
 		// change display
 		$('.row0').slideUp(300);
 		$('.row1').slideUp(500);
@@ -53,12 +53,12 @@ $(document).ready(function () {
 		message = $('#startmessage').val();
 
 		// go!
-		cycle();
+		cycleAuto();
 	});
 
 });
 
-function cycle() {
+function cycleAuto() {
 	// get the next message
 	$.post(
 		'message-changer.php',
@@ -69,6 +69,18 @@ function cycle() {
 		function (data) {
 			// new message
 			message = data;
+
+			// send SMS
+			for (var i in people) {
+				$.post(
+					'twilio.php',
+					{
+						name: people[i][0],
+						number: people[i][1],
+						message: message
+					}
+				);
+			}
 
 			// print to the browser
 			displayNextMessage(people[loopCounter % peopleCount][0], message);
@@ -82,8 +94,8 @@ function cycle() {
 			} else {
 				// recurse
 				setTimeout(function () {
-					cycle();
-				}, 1000);
+					cycleAuto();
+				}, 3000);
 			}
 		}
 	);
