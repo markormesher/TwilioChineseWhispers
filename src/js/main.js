@@ -1,8 +1,11 @@
 var peopleCount = 3;
 var laps = 2;
 var loopCounter = 0;
+var latestResponseTimer = 1;
 var people = [];
 var message = '';
+
+var TEXTS = false;
 
 $(document).ready(function () {
 
@@ -53,7 +56,7 @@ $(document).ready(function () {
 		message = $('#startmessage').val();
 
 		// go!
-		cycleAuto();
+		cycleAutopilot();
 	});
 
 	// start interactive mode
@@ -66,12 +69,13 @@ $(document).ready(function () {
 		// get the message
 		message = $('#startmessage').val();
 
-		alert('TODO: interactive mode');
+		// go!
+		cycleInteractive();
 	});
 
 });
 
-function cycleAuto() {
+function cycleAutopilot() {
 	// get the next message
 	$.post(
 		'message-changer.php',
@@ -85,7 +89,7 @@ function cycleAuto() {
 
 			// send SMS
 			for (var i in people) {
-				$.post(
+				if (TEXTS) $.post(
 					'twilio.php',
 					{
 						name: people[i][0],
@@ -107,8 +111,69 @@ function cycleAuto() {
 			} else {
 				// recurse
 				setTimeout(function () {
-					cycleAuto();
+					cycleAutopilot();
 				}, 3000);
+			}
+		}
+	);
+}
+
+function cycleInteractive() {
+	// get the next message
+	$.post(
+		'message-changer.php',
+		{
+			action: 'interactive',
+			message: message
+		},
+		function (data) {
+			// send SMS
+			if (TEXTS) $.post(
+				'twilio.php',
+				{
+					name: people[loopCounter][0],
+					number: people[loopCounter][1],
+					message: message + '(' + loopCounter + ')'
+				}
+			);
+
+			// wait for them to respond
+			waitForInteractiveResponse();
+		}
+	);
+}
+
+function waitForInteractiveResponse() {
+	// check for change to response
+	$.get(
+		'last-response.txt',
+		function (data) {
+			var chunks = data.split('//');
+			if (parseInt(chunks[0]) > latestResponseTimer) {
+				// update last response time
+				latestResponseTimer = parseInt(chunks[0]);
+
+				// update
+				message = chunks[1];
+
+				// print to the browser
+				displayNextMessage(people[loopCounter % peopleCount][0], message);
+
+				// advance
+				++loopCounter;
+
+				// done?
+				if (loopCounter >= (laps * peopleCount)) {
+					displayNextMessage('Done!', '<em>You ended up with:</em><br/>' + message);
+				} else {
+					// recurse
+					cycleInteractive()
+				}
+			} else {
+				// wait a moment, then check again
+				setTimeout(function () {
+					waitForInteractiveResponse();
+				}, 1000);
 			}
 		}
 	);

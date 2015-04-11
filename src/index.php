@@ -1,4 +1,8 @@
-<html>
+<?php
+$fh = fopen('last-response.txt', 'w');
+fwrite($fh, '0//abc');
+fclose($fh);
+?><html>
 <head>
 	<link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css"/>
 	<link type="text/css" rel="stylesheet" href="/css/font-awesome.min.css"/>
@@ -81,7 +85,7 @@
 			<div class="col-md-12">
 				<div class="pull-right">
 					<button class="btn btn-primary stage2-go-auto"><i class="fa fa-arrow-right"></i> Start Autopilot</button>
-					<button class="btn btn-primary stage2-go-manual"><i class="fa fa-arrow-right"></i> Start Interactive</button>
+					<button class="btn btn-primary stage2-go-interactive"><i class="fa fa-arrow-right"></i> Start Interactive</button>
 				</div>
 			</div>
 		</div>
