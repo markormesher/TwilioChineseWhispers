@@ -1,12 +1,13 @@
 var peopleCount = 2;
-var laps = 3;
+var laps = 1;
 var loopCounter = 0;
 var latestResponseTimer = 1;
 var people = [];
 var originalMessage = '';
 var message = '';
+var automode = 'autopilot';
 
-var TEXTS = false;
+var TEXTS = true;
 
 $(document).ready(function () {
 
@@ -61,6 +62,22 @@ $(document).ready(function () {
 		cycleAutopilot();
 	});
 
+	// start auto mode
+	$('button.stage2-go-auto-u').click(function (e) {
+		// change display
+		$('.row0').slideUp(300);
+		$('.row1').slideUp(500);
+		$('.row2').show();
+
+		// get the message
+		message = $('#startmessage').val();
+		originalMessage = message;
+
+		// go!
+		automode += '-u';
+		cycleAutopilot();
+	});
+
 	// start interactive mode
 	$('button.stage2-go-interactive').click(function (e) {
 		// change display
@@ -83,7 +100,7 @@ function cycleAutopilot() {
 	$.post(
 		'message-changer.php',
 		{
-			action: 'autopilot',
+			action: automode,
 			message: message
 		},
 		function (data) {

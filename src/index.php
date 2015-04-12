@@ -2,7 +2,8 @@
 $fh = fopen('last-response.txt', 'w');
 fwrite($fh, '0//abc');
 fclose($fh);
-?><html>
+?>
+<html>
 <head>
 	<link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css"/>
 	<link type="text/css" rel="stylesheet" href="/css/font-awesome.min.css"/>
@@ -12,7 +13,7 @@ fclose($fh);
 
 <div class="row row0">
 	<div class="col-md-12">
-		<h1 class="text-center">Twilio Chinese Whispers</h1>
+		<h1 class="text-center" style="font-weight: bold;">Twilio Chinese Whispers</h1>
 	</div>
 </div>
 
@@ -43,18 +44,18 @@ fclose($fh);
 		<div class="stage1-body">
 			<div class="row">
 				<div class="col-sm-6">
-					<input type="text" class="form-control" id="name1" placeholder="Name #1" value="Mark"/>
+					<input type="text" class="form-control" id="name1" placeholder="Name #1"/>
 				</div>
 				<div class="col-sm-6">
-					<input type="text" class="form-control" id="phone1" placeholder="Phone #1" value="07775932063"/>
+					<input type="text" class="form-control" id="phone1" placeholder="Phone #1"/>
 				</div>
 			</div>
 			<div class="row" style="margin-top: 1em;">
 				<div class="col-sm-6">
-					<input type="text" class="form-control" id="name2" placeholder="Name #2" value="Josh"/>
+					<input type="text" class="form-control" id="name2" placeholder="Name #2"/>
 				</div>
 				<div class="col-sm-6">
-					<input type="text" class="form-control" id="phone2" placeholder="Phone #2" value="07905284322"/>
+					<input type="text" class="form-control" id="phone2" placeholder="Phone #2"/>
 				</div>
 			</div>
 		</div>
@@ -76,8 +77,18 @@ fclose($fh);
 		<div class="row stage2-buttons" style="margin-top: 1em; display: none;">
 			<div class="col-md-12">
 				<div class="pull-right">
-					<button class="btn btn-primary stage2-go-auto"><i class="fa fa-arrow-right"></i> Start Autopilot</button>
-					<button class="btn btn-primary stage2-go-interactive"><i class="fa fa-arrow-right"></i> Start Interactive</button>
+					<button class="btn btn-primary stage2-go-auto">
+						<i class="fa fa-arrow-right"></i>
+						Start Autopilot (Dictionary)
+					</button>
+					<button class="btn btn-primary stage2-go-auto-u">
+						<i class="fa fa-arrow-right"></i>
+						Start Autopilot (Urban Dictionary)
+					</button>
+					<button class="btn btn-primary stage2-go-interactive">
+						<i class="fa fa-arrow-right"></i>
+						Start Interactive
+					</button>
 				</div>
 			</div>
 		</div>
